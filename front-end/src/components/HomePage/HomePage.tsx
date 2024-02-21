@@ -1,3 +1,4 @@
+import { AudioPlayer } from '../AudioPlayer'
 import { SongPlayer } from '../SongPlayer'
 import classes from './home-page.module.scss'
 
@@ -11,7 +12,8 @@ export const HomePage = (props: HomePageProps) => {
             </header>
             <section>
                 <h3>play a song</h3>
-                <SongPlayer />
+                {/* <SongPlayer /> */}
+                <AudioPlayer />
             </section>
         </div>
     )
