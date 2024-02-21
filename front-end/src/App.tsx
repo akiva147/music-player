@@ -2,9 +2,9 @@ import { useState } from 'react'
 import './App.css'
 import { Navigate, RouterProvider, createBrowserRouter } from 'react-router-dom'
 import { Layout, LoadingIcon } from './pages/Layout'
-import { ErrorPage } from './components/ErrorPage'
+import { ErrorPage } from './components/common/ErrorPage'
 import { GlobalProvider } from './providers/GlobalProvider'
-import { HomePage } from './components/HomePage'
+import { HomePage } from './components/common/HomePage'
 import { AudioPlayer } from './components/AudioPlayer'
 
 const router = createBrowserRouter([

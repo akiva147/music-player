@@ -2,8 +2,8 @@ import { Outlet, useNavigation } from 'react-router-dom'
 import classes from './layout.module.scss'
 import { Spin } from 'antd'
 import { LoadingOutlined, UpOutlined } from '@ant-design/icons'
-import { NavBar } from 'src/components/NavBar'
-import { Footer } from 'src/components/Footer'
+import { NavBar } from 'src/components/common/NavBar'
+import { Footer } from 'src/components/common/Footer'
 
 export interface LayoutProps {}
 
@@ -15,7 +15,9 @@ export const Layout = (props: LayoutProps) => {
         <div className={classes.container}>
             {navigation.state === 'loading' && <Spin indicator={LoadingIcon} />}
             <NavBar />
-            <Outlet />
+            <main>
+                <Outlet />
+            </main>
             <Footer />
         </div>
     )
