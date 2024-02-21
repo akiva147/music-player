@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { GrVolume, GrVolumeLow, GrVolumeMute } from 'react-icons/gr'
 
-export const useControls = (
+export const useControllers = (
     progressBarRef: React.RefObject<HTMLInputElement>,
     audioRef: React.RefObject<HTMLAudioElement>,
     setTimeProgress: React.Dispatch<React.SetStateAction<number>>,

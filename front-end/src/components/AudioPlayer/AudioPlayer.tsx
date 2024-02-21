@@ -13,6 +13,8 @@ import beautiful from '/a_beautiful_day.mp3'
 import jackson from '/jackson.jpeg'
 import trinix from '/trinix.jpeg'
 import { HTMLProps, useRef, useState } from 'react'
+import { useControllers } from './useControllers'
+import { VolumeController } from '../VolumeController'
 
 export interface AudioPlayerProps {}
 
@@ -45,19 +47,29 @@ export const AudioPlayer = (props: AudioPlayerProps) => {
     const audioRef = useRef<HTMLAudioElement>(null)
     const progressBarRef = useRef<HTMLInputElement>(null)
 
+    const {
+        getters: { isPlaying },
+        setters: { setIsPlaying, setIsVolumeMuted, setVolume },
+        volumeRef,
+        volumeIcon,
+    } = useControllers(progressBarRef, audioRef, setTimeProgress, duration)
+
     return (
         <div className={classes.container}>
-            <div className={classes.inner}>
+            <main>
                 <DispalySong
                     {...{
                         currentSong,
                         audioRef,
                         handleNext: () =>
                             handleNext(
+                                progressBarRef,
                                 songIndex,
                                 setSongIndex,
                                 songs,
-                                setCurrentSong
+                                setCurrentSong,
+                                setTimeProgress,
+                                audioRef
                             ),
                         onLoadedMetadata: () =>
                             onLoadedMetadata(
@@ -69,16 +81,17 @@ export const AudioPlayer = (props: AudioPlayerProps) => {
                 />
                 <Controllers
                     {...{
-                        audioRef,
-                        progressBarRef,
-                        duration,
-                        setTimeProgress,
+                        setIsPlaying,
+                        isPlaying,
                         handleNext: () =>
                             handleNext(
+                                progressBarRef,
                                 songIndex,
                                 setSongIndex,
                                 songs,
-                                setCurrentSong
+                                setCurrentSong,
+                                setTimeProgress,
+                                audioRef
                             ),
                         handlePrevious: () =>
                             handlePrevious(
@@ -90,6 +103,8 @@ export const AudioPlayer = (props: AudioPlayerProps) => {
                             ),
                     }}
                 />
+            </main>
+            <footer>
                 <ProgressBar
                     {...{
                         progressBarRef,
@@ -99,7 +114,10 @@ export const AudioPlayer = (props: AudioPlayerProps) => {
                             handleProgressChange(progressBarRef, audioRef),
                     }}
                 />
-            </div>
+                <VolumeController
+                    {...{ setIsVolumeMuted, setVolume, volumeIcon, volumeRef }}
+                />
+            </footer>
         </div>
     )
 }
