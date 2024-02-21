@@ -8,7 +8,7 @@ import {
     StepForwardOutlined,
     FastForwardOutlined,
 } from '@ant-design/icons'
-import { ITrack } from '../AudioPlayer'
+import { ISong } from '../AudioPlayer'
 import { GrVolumeMute, GrVolumeLow, GrVolume } from 'react-icons/gr'
 
 export interface ControlsProps {
@@ -16,10 +16,10 @@ export interface ControlsProps {
     progressBarRef: React.RefObject<HTMLInputElement>
     duration: number
     setTimeProgress: React.Dispatch<React.SetStateAction<number>>
-    tracks: ITrack[]
-    trackIndex: number
-    setTrackIndex: React.Dispatch<React.SetStateAction<number>>
-    setCurrentTrack: React.Dispatch<React.SetStateAction<ITrack>>
+    songs: ISong[]
+    songIndex: number
+    setSongIndex: React.Dispatch<React.SetStateAction<number>>
+    setCurrentSong: React.Dispatch<React.SetStateAction<ISong>>
     handleNext: () => void
 }
 
@@ -28,10 +28,10 @@ export const Controls = ({
     progressBarRef,
     duration,
     setTimeProgress,
-    tracks,
-    trackIndex,
-    setTrackIndex,
-    setCurrentTrack,
+    songs,
+    songIndex,
+    setSongIndex,
+    setCurrentSong,
     handleNext,
 }: ControlsProps) => {
     const [isPlaying, setIsPlaying] = useState(false)
@@ -84,13 +84,13 @@ export const Controls = ({
     }
 
     const handlePrevious = () => {
-        if (trackIndex === 0) {
-            const lastTrackIndex = tracks.length - 1
-            setTrackIndex(lastTrackIndex)
-            setCurrentTrack(tracks[lastTrackIndex])
+        if (songIndex === 0) {
+            const lastSongIndex = songs.length - 1
+            setSongIndex(lastSongIndex)
+            setCurrentSong(songs[lastSongIndex])
         } else {
-            setTrackIndex((prev) => prev - 1)
-            setCurrentTrack(tracks[trackIndex - 1])
+            setSongIndex((prev) => prev - 1)
+            setCurrentSong(songs[songIndex - 1])
         }
     }
 

@@ -5,6 +5,7 @@ import { Layout, LoadingIcon } from './pages/Layout'
 import { ErrorPage } from './components/ErrorPage'
 import { GlobalProvider } from './providers/GlobalProvider'
 import { HomePage } from './components/HomePage'
+import { AudioPlayer } from './components/AudioPlayer'
 
 const router = createBrowserRouter([
     {
@@ -15,6 +16,10 @@ const router = createBrowserRouter([
             {
                 index: true,
                 element: <HomePage />,
+            },
+            {
+                path: '/song/:songId',
+                element: <AudioPlayer />,
             },
             {
                 path: '*',

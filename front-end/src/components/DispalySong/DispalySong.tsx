@@ -1,21 +1,21 @@
-import { ITrack } from '../AudioPlayer'
-import classes from './dispaly-track.module.scss'
+import { ISong } from '../AudioPlayer'
+import classes from './dispaly-song.module.scss'
 
-export interface DispalyTrackProps {
-    currentTrack: ITrack
+export interface DispalySongProps {
+    currentSong: ISong
     audioRef: React.RefObject<HTMLAudioElement>
     setDuration: React.Dispatch<React.SetStateAction<number>>
     progressBarRef: React.RefObject<HTMLInputElement>
     handleNext: () => void
 }
 
-export const DispalyTrack = ({
-    currentTrack,
+export const DispalySong = ({
+    currentSong,
     audioRef,
     setDuration,
     progressBarRef,
     handleNext,
-}: DispalyTrackProps) => {
+}: DispalySongProps) => {
     const onLoadedMetadata = () => {
         if (!audioRef.current || !progressBarRef.current) return
         const seconds = audioRef.current.duration
@@ -26,15 +26,15 @@ export const DispalyTrack = ({
     return (
         <div className={classes.container}>
             <audio
-                src={currentTrack.src}
+                src={currentSong.src}
                 ref={audioRef}
                 onLoadedMetadata={onLoadedMetadata}
                 onEnded={handleNext}
             />
             <div className={classes['audio-info']}>
                 <div className={classes['audio-image']}>
-                    {currentTrack.thumbnail ? (
-                        <img src={currentTrack.thumbnail} alt="audio avatar" />
+                    {currentSong.thumbnail ? (
+                        <img src={currentSong.thumbnail} alt="audio avatar" />
                     ) : (
                         <div className={classes['icon-wrapper']}>
                             <span className={classes['audio-icon']}>
@@ -44,8 +44,8 @@ export const DispalyTrack = ({
                     )}
                 </div>
                 <div className={classes.text}>
-                    <p className={classes.title}>{currentTrack.title}</p>
-                    <p>{currentTrack.author}</p>
+                    <p className={classes.title}>{currentSong.title}</p>
+                    <p>{currentSong.author}</p>
                 </div>
             </div>
         </div>

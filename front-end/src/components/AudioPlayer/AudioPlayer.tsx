@@ -1,5 +1,5 @@
 import { Controls } from '../Controls'
-import { DispalyTrack } from '../DispalyTrack'
+import { DispalySong } from '../DispalySong'
 import { ProgressBar } from '../ProgressBar'
 import classes from './audio-player.module.scss'
 import world from '/We_Are_The_World.mp3'
@@ -10,12 +10,12 @@ import { HTMLProps, useRef, useState } from 'react'
 
 export interface AudioPlayerProps {}
 
-export interface ITrack extends HTMLProps<HTMLAudioElement> {
+export interface ISong extends HTMLProps<HTMLAudioElement> {
     author: string
     thumbnail: string
 }
 
-export const tracks: ITrack[] = [
+export const songs: ISong[] = [
     {
         title: 'Trinix ft Rushawn – Its a beautiful day',
         src: beautiful,
@@ -31,8 +31,8 @@ export const tracks: ITrack[] = [
 ]
 
 export const AudioPlayer = (props: AudioPlayerProps) => {
-    const [trackIndex, setTrackIndex] = useState(0)
-    const [currentTrack, setCurrentTrack] = useState(tracks[trackIndex])
+    const [songIndex, setSongIndex] = useState(0)
+    const [currentSong, setCurrentSong] = useState(songs[songIndex])
     const [timeProgress, setTimeProgress] = useState(0)
     const [duration, setDuration] = useState(0)
 
@@ -40,22 +40,22 @@ export const AudioPlayer = (props: AudioPlayerProps) => {
     const progressBarRef = useRef<HTMLInputElement>(null)
 
     const handleNext = () => {
-        if (trackIndex >= tracks.length - 1) {
-            //reset the playlist to the first track
-            setTrackIndex(0)
-            setCurrentTrack(tracks[0])
+        if (songIndex >= songs.length - 1) {
+            //reset the playlist to the first song
+            setSongIndex(0)
+            setCurrentSong(songs[0])
         } else {
-            setTrackIndex((prev) => prev + 1)
-            setCurrentTrack(tracks[trackIndex + 1])
+            setSongIndex((prev) => prev + 1)
+            setCurrentSong(songs[songIndex + 1])
         }
     }
 
     return (
         <div className={classes.container}>
             <div className={classes.inner}>
-                <DispalyTrack
+                <DispalySong
                     {...{
-                        currentTrack,
+                        currentSong,
                         audioRef,
                         setDuration,
                         progressBarRef,
@@ -68,10 +68,10 @@ export const AudioPlayer = (props: AudioPlayerProps) => {
                         progressBarRef,
                         duration,
                         setTimeProgress,
-                        setCurrentTrack,
-                        setTrackIndex,
-                        trackIndex,
-                        tracks,
+                        setCurrentSong,
+                        setSongIndex: setSongIndex,
+                        songIndex: songIndex,
+                        songs,
                         handleNext,
                     }}
                 />
