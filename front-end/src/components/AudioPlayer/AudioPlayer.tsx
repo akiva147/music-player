@@ -1,4 +1,10 @@
-import { Controls } from '../Controls'
+import {
+    handleNext,
+    handlePrevious,
+    handleProgressChange,
+    onLoadedMetadata,
+} from 'src/utils/audio-player.utils'
+import { Controllers } from '../Controllers'
 import { DispalySong } from '../DispalySong'
 import { ProgressBar } from '../ProgressBar'
 import classes from './audio-player.module.scss'
@@ -39,17 +45,6 @@ export const AudioPlayer = (props: AudioPlayerProps) => {
     const audioRef = useRef<HTMLAudioElement>(null)
     const progressBarRef = useRef<HTMLInputElement>(null)
 
-    const handleNext = () => {
-        if (songIndex >= songs.length - 1) {
-            //reset the playlist to the first song
-            setSongIndex(0)
-            setCurrentSong(songs[0])
-        } else {
-            setSongIndex((prev) => prev + 1)
-            setCurrentSong(songs[songIndex + 1])
-        }
-    }
-
     return (
         <div className={classes.container}>
             <div className={classes.inner}>
@@ -57,26 +52,52 @@ export const AudioPlayer = (props: AudioPlayerProps) => {
                     {...{
                         currentSong,
                         audioRef,
-                        setDuration,
-                        progressBarRef,
-                        handleNext,
+                        handleNext: () =>
+                            handleNext(
+                                songIndex,
+                                setSongIndex,
+                                songs,
+                                setCurrentSong
+                            ),
+                        onLoadedMetadata: () =>
+                            onLoadedMetadata(
+                                progressBarRef,
+                                audioRef,
+                                setDuration
+                            ),
                     }}
                 />
-                <Controls
+                <Controllers
                     {...{
                         audioRef,
                         progressBarRef,
                         duration,
                         setTimeProgress,
-                        setCurrentSong,
-                        setSongIndex: setSongIndex,
-                        songIndex: songIndex,
-                        songs,
-                        handleNext,
+                        handleNext: () =>
+                            handleNext(
+                                songIndex,
+                                setSongIndex,
+                                songs,
+                                setCurrentSong
+                            ),
+                        handlePrevious: () =>
+                            handlePrevious(
+                                songIndex,
+                                setSongIndex,
+                                songs,
+                                setCurrentSong,
+                                audioRef
+                            ),
                     }}
                 />
                 <ProgressBar
-                    {...{ progressBarRef, audioRef, timeProgress, duration }}
+                    {...{
+                        progressBarRef,
+                        timeProgress,
+                        duration,
+                        handleProgressChange: () =>
+                            handleProgressChange(progressBarRef, audioRef),
+                    }}
                 />
             </div>
         </div>

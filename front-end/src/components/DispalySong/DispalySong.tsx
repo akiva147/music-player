@@ -4,25 +4,16 @@ import classes from './dispaly-song.module.scss'
 export interface DispalySongProps {
     currentSong: ISong
     audioRef: React.RefObject<HTMLAudioElement>
-    setDuration: React.Dispatch<React.SetStateAction<number>>
-    progressBarRef: React.RefObject<HTMLInputElement>
     handleNext: () => void
+    onLoadedMetadata: () => void
 }
 
 export const DispalySong = ({
     currentSong,
     audioRef,
-    setDuration,
-    progressBarRef,
     handleNext,
+    onLoadedMetadata,
 }: DispalySongProps) => {
-    const onLoadedMetadata = () => {
-        if (!audioRef.current || !progressBarRef.current) return
-        const seconds = audioRef.current.duration
-        setDuration(seconds)
-        progressBarRef.current.max = seconds.toString()
-    }
-
     return (
         <div className={classes.container}>
             <audio
