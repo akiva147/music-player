@@ -6,8 +6,17 @@ import classes from './home-page.module.scss'
 export interface HomePageProps {}
 
 export const HomePage = (props: HomePageProps) => {
-    const navigate = useNavigate()
+    const API_URL = 'https://api.soundcloud.com'
+    const TRACK_ID = '123' // Replace with the track ID you want to play
+    const API_KEY = 'your_api_key_here' // Replace with your SoundCloud API key
 
+    const navigate = useNavigate()
+    // const song = new Audio(
+    //     `${API_URL}/tracks/${TRACK_ID}/stream?client_id=${API_KEY}`
+    // )
+    const song = new Audio('https://www.deezer.com/track/72160317')
+    console.log('🚀 ~ HomePage ~ song:', song)
+    // song.play()
     return (
         <div className={classes.container}>
             <header>
