@@ -5,9 +5,9 @@
     height: 100%;
     display: grid;
     grid-template-rows: 1fr 15fr;
-    background-color: $black;
+    background-color: $background;
     color: $text-color;
-    main {
+    & > main {
         display: flex;
         justify-content: center;
         align-items: center;

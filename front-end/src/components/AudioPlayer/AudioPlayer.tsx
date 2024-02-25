@@ -69,7 +69,8 @@ export const AudioPlayer = (props: AudioPlayerProps) => {
                                 songs,
                                 setCurrentSong,
                                 setTimeProgress,
-                                audioRef
+                                audioRef,
+                                setIsPlaying
                             ),
                         onLoadedMetadata: () =>
                             onLoadedMetadata(
@@ -91,7 +92,8 @@ export const AudioPlayer = (props: AudioPlayerProps) => {
                                 songs,
                                 setCurrentSong,
                                 setTimeProgress,
-                                audioRef
+                                audioRef,
+                                setIsPlaying
                             ),
                         handlePrevious: () =>
                             handlePrevious(

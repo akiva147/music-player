@@ -1,11 +1,4 @@
 import classes from './controllers.module.scss'
-import {
-    StepBackwardOutlined,
-    PauseCircleOutlined,
-    PlayCircleOutlined,
-    StepForwardOutlined,
-} from '@ant-design/icons'
-import { useControllers } from '../AudioPlayer/useControllers'
 
 export interface ControllersProps {
     setIsPlaying: React.Dispatch<React.SetStateAction<boolean>>
@@ -22,21 +15,26 @@ export const Controllers = ({
 }: ControllersProps) => {
     return (
         <div className={classes.container}>
-            <div className={classes.controls}>
-                <button onClick={handlePrevious}>
-                    <StepBackwardOutlined />
-                </button>
-                <button onClick={() => setIsPlaying((prev) => !prev)}>
-                    {isPlaying ? (
-                        <PauseCircleOutlined />
-                    ) : (
-                        <PlayCircleOutlined />
-                    )}
-                </button>
-                <button onClick={handleNext}>
-                    <StepForwardOutlined />
-                </button>
-            </div>
+            <img
+                src="/skip_prev.svg"
+                alt="skip prev"
+                onClick={handlePrevious}
+            />
+            {isPlaying ? (
+                <img
+                    src="/pause_circle.svg"
+                    alt="pause circle"
+                    onClick={() => setIsPlaying((prev) => !prev)}
+                />
+            ) : (
+                <img
+                    src="/play_circle.svg"
+                    alt="play circle"
+                    onClick={() => setIsPlaying((prev) => !prev)}
+                />
+            )}
+
+            <img src="/skip_next.svg" alt="skip next" onClick={handleNext} />
         </div>
     )
 }

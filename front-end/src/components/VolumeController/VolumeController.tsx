@@ -15,9 +15,9 @@ export const VolumeController = ({
 }: VolumeControllerProps) => {
     return (
         <div className={classes.container}>
-            <button onClick={() => setIsVolumeMuted((prev) => !prev)}>
-                {volumeIcon}
-            </button>
+            {/* <button onClick={() => setIsVolumeMuted((prev) => !prev)}> */}
+            {volumeIcon}
+            {/* </button> */}
             <input
                 type="range"
                 min={0}

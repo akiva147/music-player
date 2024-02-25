@@ -1,0 +1,17 @@
+.container {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+
+    input[type='range'] {
+        cursor: pointer;
+        height: 0.2rem;
+        margin: 10px 0;
+        width: 100%;
+    }
+    img {
+        cursor: pointer;
+    }
+}

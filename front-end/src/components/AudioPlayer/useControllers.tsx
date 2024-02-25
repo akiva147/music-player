@@ -48,11 +48,32 @@ export const useControllers = (
 
     const volumeIcon =
         isVolumeMuted || volume < 5 ? (
-            <GrVolumeMute />
-        ) : volume < 49 ? (
-            <GrVolumeLow />
+            <img
+                src="/no_sound.svg"
+                alt="no sound"
+                onClick={() => setIsVolumeMuted((prev) => !prev)}
+            />
+        ) : volume < 40 ? (
+            // <GrVolumeLow />
+            <img
+                src="/volume_mute.svg"
+                alt="volume mute"
+                onClick={() => setIsVolumeMuted((prev) => !prev)}
+            />
+        ) : volume < 70 ? (
+            <img
+                src="/volume_down.svg"
+                alt="volume down"
+                onClick={() => setIsVolumeMuted((prev) => !prev)}
+            />
         ) : (
-            <GrVolume />
+            // <GrVolume />
+            <img
+                src="/volume_up.svg"
+                alt="volume up"
+                onClick={() => setIsVolumeMuted((prev) => !prev)}
+            />
+            // <GrVolume />
         )
 
     return {
