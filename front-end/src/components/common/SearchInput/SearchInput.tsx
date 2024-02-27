@@ -26,7 +26,6 @@ export const SearchInput = ({
 }: SearchInputProps) => {
     const [value, setValue] = useState(initialValue)
     const { className, ...values } = props
-    console.log('🚀 ~ className:', className)
 
     useEffect(() => {
         setValue(initialValue)

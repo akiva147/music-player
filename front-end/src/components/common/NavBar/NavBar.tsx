@@ -1,20 +1,24 @@
 import { useState } from 'react'
 import { SearchInput } from '../SearchInput'
 import classes from './nav-bar.module.scss'
+import { option } from 'src/types/general.types'
+import { songService } from 'src/services/song.service'
 
 export interface NavBarProps {}
 
 export const NavBar = (props: NavBarProps) => {
-    const [searchValue, setSearchValue] = useState('')
+    const [autoCompleteResults, setAutoCompleteResults] = useState<option[]>([])
 
     return (
         <div className={classes.container}>
             <SearchInput
-                onChange={(value) => {
-                    console.log('🚀 ~ NavBar ~ value:', value)
-                    setSearchValue(value.toString())
+                autoComplete
+                onChange={async (value) => {
+                    if (value.toString().trim().length === 0) return
+                    await songService.getAutoCompleteResults(value.toString())
+                    // setAutoCompleteResults(res)
                 }}
-                value={searchValue}
+                value=""
                 className="search"
                 // variant="borderless"
             />
