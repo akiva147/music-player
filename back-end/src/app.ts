@@ -1,15 +1,21 @@
+import cookieParser from "cookie-parser";
+import cors from "cors";
 import dotenv from "dotenv";
 import express from "express";
-import { createServer } from "node:http";
+import { router as songRouter } from "./contollers/song.controller";
 
 dotenv.config();
+
 const port = process.env.PORT;
 
 const app = express();
+app.use(express.json());
+app.use(cors({ origin: true, credentials: true }));
+app.use(cookieParser());
 
-const server = createServer(app);
+app.use("/song", songRouter);
 
-server.listen(port, () => {
+app.listen(port, () => {
   console.log(`server running at http://localhost:${port}`);
 });
 

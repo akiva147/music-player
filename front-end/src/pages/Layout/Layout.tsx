@@ -18,7 +18,7 @@ export const Layout = (props: LayoutProps) => {
             <main>
                 <Outlet />
             </main>
-            <Footer />
+            {/* <Footer /> */}
         </div>
     )
 }

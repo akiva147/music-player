@@ -6,6 +6,8 @@ import { ErrorPage } from './components/common/ErrorPage'
 import { GlobalProvider } from './providers/GlobalProvider'
 import { HomePage } from './components/common/HomePage'
 import { AudioPlayer } from './components/AudioPlayer'
+import { LoginPage } from './components/LoginPage'
+import { TermsOfUse } from './components/TermsOfUse'
 
 const router = createBrowserRouter([
     {
@@ -15,6 +17,14 @@ const router = createBrowserRouter([
         children: [
             {
                 index: true,
+                element: <LoginPage />,
+            },
+            {
+                path: '/terms-of-use',
+                element: <TermsOfUse />,
+            },
+            {
+                path: '/home',
                 element: <HomePage />,
             },
             {
