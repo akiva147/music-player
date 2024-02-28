@@ -1,4 +1,4 @@
-import { ISong } from 'src/components/AudioPlayer'
+import { Song } from 'src/models/deezer'
 
 export const handleProgressChange = (
     progressBarRef: React.RefObject<HTMLInputElement>,
@@ -24,15 +24,17 @@ export const onLoadedMetadata = (
 }
 
 export const handlePrevious = (
-    songIndex: number,
-    setSongIndex: React.Dispatch<React.SetStateAction<number>>,
-    songs: ISong[],
-    setCurrentSong: React.Dispatch<React.SetStateAction<ISong>>,
-    audioRef: React.RefObject<HTMLAudioElement>
+    audioRef: React.RefObject<HTMLAudioElement>,
+    setCurrentSong: React.Dispatch<React.SetStateAction<Song | undefined>>,
+    songIndex?: number,
+    setSongIndex?: React.Dispatch<React.SetStateAction<number>>,
+    songs?: Song[]
 ) => {
     if (!audioRef.current) return
 
     if (audioRef.current.currentTime >= 1) audioRef.current.currentTime = 0
+
+    if (!songs || !songIndex || !setSongIndex) return
     else if (songIndex !== 0) {
         setSongIndex((prev) => prev - 1)
         setCurrentSong(songs[songIndex - 1])
@@ -41,18 +43,19 @@ export const handlePrevious = (
 
 export const handleNext = (
     progressBarRef: React.RefObject<HTMLInputElement>,
-    songIndex: number,
-    setSongIndex: React.Dispatch<React.SetStateAction<number>>,
-    songs: ISong[],
-    setCurrentSong: React.Dispatch<React.SetStateAction<ISong>>,
-    setTimeProgress: React.Dispatch<React.SetStateAction<number>>,
     audioRef: React.RefObject<HTMLAudioElement>,
-    setIsPlaying: React.Dispatch<React.SetStateAction<boolean>>
+    setIsPlaying: React.Dispatch<React.SetStateAction<boolean>>,
+    setTimeProgress: React.Dispatch<React.SetStateAction<number>>,
+    setCurrentSong: React.Dispatch<React.SetStateAction<Song | undefined>>,
+    songIndex?: number,
+    setSongIndex?: React.Dispatch<React.SetStateAction<number>>,
+    songs?: Song[]
 ) => {
     if (!progressBarRef.current || !audioRef.current?.currentTime) return
     progressBarRef.current.max = '0'
     audioRef.current.currentTime = 0
     setTimeProgress(0)
+    if (!songs || !songIndex || !setSongIndex) return
     if (songIndex >= songs.length - 1) {
         //reset the playlist to the first song
         setSongIndex(0)
