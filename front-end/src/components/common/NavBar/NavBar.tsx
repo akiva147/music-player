@@ -3,9 +3,9 @@ import { SearchInput } from '../SearchInput'
 import classes from './nav-bar.module.scss'
 import { option } from 'src/types/general.types'
 import { songService } from 'src/services/song.service'
-import { Song, SongOption } from 'src/models/deezer'
-import { useCurrentSong } from 'src/hooks/useCurrentSong'
+import { useCurrentPlaylist } from 'src/hooks/useCurrentPlaylist'
 import { useNavigate } from 'react-router'
+import { SongOption } from 'src/models/deezer'
 
 export interface NavBarProps {}
 
@@ -13,7 +13,7 @@ export const NavBar = (props: NavBarProps) => {
     const [autoCompleteResults, setAutoCompleteResults] = useState<
         SongOption[]
     >([])
-    const { setCurrentSong } = useCurrentSong()
+    const { setCurrentPlaylist } = useCurrentPlaylist()
 
     const autoCompleteOptions: option[] = useMemo(() => {
         if (autoCompleteResults.length === 0)
@@ -35,7 +35,8 @@ export const NavBar = (props: NavBarProps) => {
                     const currentSong = autoCompleteResults.find(
                         (s) => s.value.preview === preview
                     )
-                    setCurrentSong(currentSong?.value)
+                    if (!currentSong) throw new Error('song not found')
+                    setCurrentPlaylist([currentSong?.value])
                     if (!location.pathname.includes('song') && preview)
                         navigate(`/song/search`)
                 }}
@@ -47,11 +48,12 @@ export const NavBar = (props: NavBarProps) => {
                     if (res === 'results not found') setAutoCompleteResults([])
                     else setAutoCompleteResults(res)
                 }}
-                onSearch={() => setCurrentSong(autoCompleteResults[0].value)}
+                onSearch={() =>
+                    setCurrentPlaylist([autoCompleteResults[0].value])
+                }
                 value=""
                 className="search"
                 placeholder="search song..."
-                // variant="borderless"
             />
         </div>
     )
