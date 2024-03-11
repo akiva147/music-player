@@ -8,44 +8,27 @@ import { Controllers } from '../Controllers'
 import { DispalySong } from '../DispalySong'
 import { ProgressBar } from '../ProgressBar'
 import classes from './audio-player.module.scss'
-import world from '/We_Are_The_World.mp3'
-import beautiful from '/a_beautiful_day.mp3'
-import jackson from '/jackson.jpeg'
-import trinix from '/trinix.jpeg'
-import { HTMLProps, useRef, useState } from 'react'
+
+import { useRef, useState } from 'react'
 import { useControllers } from './useControllers'
 import { VolumeController } from '../VolumeController'
+import { useParams } from 'react-router'
+import { useCurrentPlaylist } from 'src/hooks/useCurrentPlaylist'
 
 export interface AudioPlayerProps {}
 
-export interface ISong extends HTMLProps<HTMLAudioElement> {
-    author: string
-    thumbnail: string
-}
-
-export const songs: ISong[] = [
-    {
-        title: 'Trinix ft Rushawn – Its a beautiful day',
-        src: beautiful,
-        author: 'Trinix ft Rushawn',
-        thumbnail: trinix,
-    },
-    {
-        title: 'Michael Jackson – We Are The World',
-        src: world,
-        author: 'Michael Jackson',
-        thumbnail: jackson,
-    },
-]
-
 export const AudioPlayer = (props: AudioPlayerProps) => {
-    const [songIndex, setSongIndex] = useState(0)
-    const [currentSong, setCurrentSong] = useState(songs[songIndex])
+    const { currentPlaylist } = useCurrentPlaylist()
     const [timeProgress, setTimeProgress] = useState(0)
     const [duration, setDuration] = useState(0)
-
+    const [songIndex, setSongIndex] = useState(0)
+    const [currentSong, setCurrentSong] = useState(currentPlaylist[songIndex])
     const audioRef = useRef<HTMLAudioElement>(null)
     const progressBarRef = useRef<HTMLInputElement>(null)
+
+    const songId = useParams()
+
+    if (!songId || !currentSong) throw new Error('No song id provided')
 
     const {
         getters: { isPlaying },
@@ -64,13 +47,13 @@ export const AudioPlayer = (props: AudioPlayerProps) => {
                         handleNext: () =>
                             handleNext(
                                 progressBarRef,
-                                songIndex,
-                                setSongIndex,
-                                songs,
-                                setCurrentSong,
-                                setTimeProgress,
                                 audioRef,
-                                setIsPlaying
+                                currentPlaylist,
+                                songIndex,
+                                setIsPlaying,
+                                setTimeProgress,
+                                setCurrentSong,
+                                setSongIndex
                             ),
                         onLoadedMetadata: () =>
                             onLoadedMetadata(
@@ -87,21 +70,21 @@ export const AudioPlayer = (props: AudioPlayerProps) => {
                         handleNext: () =>
                             handleNext(
                                 progressBarRef,
-                                songIndex,
-                                setSongIndex,
-                                songs,
-                                setCurrentSong,
-                                setTimeProgress,
                                 audioRef,
-                                setIsPlaying
+                                currentPlaylist,
+                                songIndex,
+                                setIsPlaying,
+                                setTimeProgress,
+                                setCurrentSong,
+                                setSongIndex
                             ),
                         handlePrevious: () =>
                             handlePrevious(
+                                audioRef,
+                                currentPlaylist,
                                 songIndex,
-                                setSongIndex,
-                                songs,
                                 setCurrentSong,
-                                audioRef
+                                setSongIndex
                             ),
                     }}
                 />
